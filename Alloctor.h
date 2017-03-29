@@ -13,7 +13,7 @@ class Alloctor {
 	void trace(){
 		sub_alloctor.trace();
 	}
-	private:
+	
 	inline void destory(T* p){
 		p->~T();
 	}
