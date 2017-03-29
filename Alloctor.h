@@ -1,3 +1,5 @@
+#ifndef ALLOCTOR_H
+#define ALLOCTOR_H
 #include<malloc.h>
 #include<iostream>
 #include"Sub_alloctor.h"
@@ -6,7 +8,7 @@ using namespace std;
 template <class T>
 class Alloctor {
 	public:
-	T* allocate(int,const T&);
+	T* allocate(int);
 	void deallocate(T*,int );
 	void trace(){
 		sub_alloctor.trace();
@@ -16,12 +18,12 @@ class Alloctor {
 		p->~T();
 	}
 	inline size_t ROUND_UP(size_t bytes){
-		return (bytes+_MIN_BYTES)&(~_MIN_BYTES);
+		return (bytes%_MIN_BYTES==0)?(bytes):(bytes/_MIN_BYTES*_MIN_BYTES+_MIN_BYTES);
 	}
 	Sub_alloctor<T> sub_alloctor;
 };
 template <class T>
-T* Alloctor<T>::allocate(int n,const T& clone){
+T* Alloctor<T>::allocate(int n){
 	
 	size_t bytes=ROUND_UP(n*sizeof(T));
 	T* result;
@@ -33,10 +35,6 @@ T* Alloctor<T>::allocate(int n,const T& clone){
 	if(result==0) {
 		_BAD_ALLOC;
 	}
-	
-
-	for(int i=0;i<n;++i)
-		*(result+i)=T{clone};
 	
 	return result;
 }
@@ -52,4 +50,4 @@ void Alloctor<T>::deallocate(T* p,int n){
 		sub_alloctor.deallocate(p,bytes);
 	}
 }
-
+#endif
