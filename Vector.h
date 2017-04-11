@@ -14,7 +14,7 @@ class Vector{
 		inline int size(){ return size_num;}
 		void clear();
 		~ Vector();
-	private :
+//	private :
 		int size_num;
 		int total_size;
 		T* start;
@@ -24,13 +24,14 @@ class Vector{
 };
 template<class T>
 Vector<T>::Vector(){
+	alloc=Alloctor<T>();
 	size_num=0;
 	total_size=INIL_SIZE;
 	start=alloc.allocate(INIL_SIZE);
 }
 template<class T>
 T Vector<T>::get(int index){
-	if(index>=size()) return(T)0;
+	if(index>=size()) return T{};
 	return *(start+index);
 }
 template<class T>
