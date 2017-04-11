@@ -93,6 +93,8 @@ void Deque<T>::push_back(const T& toAdd){
 template<class T>
 void Deque<T>::extend(){
 	cout<<"start extend!!!"<<endl;
+	cout<<"memory pool: "<<t_allo.sub_alloctor.free_size<<endl;
+	cout<<"number:"<<3*chunk_num()<<endl;
 	int num=chunk_num();
 	T** new_start=t_allo.allocate(3*num)+num;
 	front_free_chunk+=num;
@@ -122,8 +124,8 @@ void Deque<T>::remove_front(){
 template<class T>
 void Deque<T>::remove_back(){
 	if(size()==0) return;
-	cout<<"working"<<endl;
-	if(back_chunk_end=CHUNK_SIZE-1){
+	if(back_chunk_end==CHUNK_SIZE-1){
+		cout<<"one chunk is being moving"<<endl;
 		tp_allo.deallocate(*(map_start-back_size),CHUNK_SIZE);
 		back_chunk_end=0;
 		back_size--;
