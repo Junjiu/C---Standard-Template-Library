@@ -78,7 +78,8 @@ void Sub_alloctor<T>::refill(obj** head,size_t bytes){
 	cout<<"start link"<<endl;
 //	cout<<sizeof(obj*)<<"  sieof(obj())  "<<sizeof(char*)<<endl;
 	for(int i=0;i<num-1;++i){
-		printf(" creat obj %x i:%d \n",p+bytes/sizeof(obj),i);
+
+
 		*p=obj();
 		p->next_free_list=p+bytes/sizeof(obj);
 		p+=bytes/sizeof(obj);
@@ -88,13 +89,15 @@ void Sub_alloctor<T>::refill(obj** head,size_t bytes){
 }
 template<class T>
 obj* Sub_alloctor<T>::chunk(size_t bytes,int &num){
-    cout<<"start chunk"<<endl;
+
+//  cout<<"start chunk"<<endl;
 	obj* result=(obj*)start_free;
-	cout<<"looking for"<<bytes<<endl;
+//	cout<<"looking for"<<bytes<<endl;
 	size_t node_size=bytes/10;
-	cout<<"free size is"<<free_size<<endl;
+//	cout<<"free size is"<<free_size<<endl;
 	if(free_size<node_size){
-		cout<<"memory pool not enough"<<endl;
+//		cout<<"memory pool not enough"<<endl;
+
 		if(free_size!=0){
 			obj** target_list=free_list+index(free_size);
 			*result=obj();
@@ -115,7 +118,7 @@ obj* Sub_alloctor<T>::chunk(size_t bytes,int &num){
 //	printf("%x new_start_free\n",start_free);
 //	cout<<bytes<<"bytes"<<endl;
 //	cout<<free_size<<"free_size"<<endl;
- cout<<"end chunk"<<endl;
+
 	return result;
 }
 #endif
